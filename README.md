@@ -1,0 +1,34 @@
+<p align="center">
+    <a href="https://doppar.com" target="_blank">
+        <img src="https://raw.githubusercontent.com/doppar/doppar/7138fb0e72cd55256769be6947df3ac48c300700/public/logo.png" width="400">
+    </a>
+</p>
+
+<p align="center">
+<a href="https://github.com/doppar/guard/actions/workflows/tests.yml"><img src="https://github.com/doppar/guard/actions/workflows/tests.yml/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/doppar/guard"><img src="https://img.shields.io/packagist/dt/doppar/guard" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/doppar/guard"><img src="https://img.shields.io/packagist/v/doppar/guard" alt="Latest Stable Version"></a>
+<a href="https://github.com/doppar/guard/blob/main/LICENSE"><img src="https://img.shields.io/github/license/doppar/guard" alt="License"></a>
+</p>
+
+## About Doppar Guard
+
+> **Note:** This repository contains the core code of the Doppar framework guard package. If you want to build an application using Doppar, visit the main [Doppar repository](https://github.com/doppar/doppar).
+
+Doppar Guard is a modern authorization package built to bring powerful, expressive, and fine-grained access control to your Doppar applications. Doppar Guard offers a lightweight yet robust solution for defining and checking user permissions with clarity and ease. Designed for flexibility, security, and developer happiness, Doppar Guard streamlines the process of implementing complex authorization logic, helping teams build secure applications faster—without sacrificing control or performance.
+
+## Contributing
+
+Thank you for considering contributing to the Doppar framework! The contribution guide can be found in the [Doppar documentation](https://doppar.com/versions/3.x/contributions.html).
+
+## Code of Conduct
+
+In order to ensure that the Doppar community is welcoming to all, please review and abide by the [Code of Conduct](https://doppar.com/versions/3.x/contributions.html#code-of-conduct).
+
+## Security Vulnerabilities
+
+Please review [our security policy](https://github.com/doppar/framework/security/policy) on how to report security vulnerabilities.
+
+## License
+
+The Doppar framework is open-sourced software licensed under the [MIT license](LICENSE.md).

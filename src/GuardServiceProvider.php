@@ -15,6 +15,8 @@ class GuardServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton('authorizer.guard', Authorizer::class);
+
+        app('authorizer.guard')->resolveUserUsing(fn() => auth()->user());
     }
 
     /**

@@ -307,11 +307,23 @@ class Authorizer
      */
     protected function callAuthCallback($user, callable $callback, array $arguments = []): bool
     {
+        // If no user is provided
+        // the callback expects a user parameter, return false
+        if ($user === null) {
+            $reflection = new \ReflectionFunction($callback);
+            $parameters = $reflection->getParameters();
+
+            // If the first parameter is a user parameter, 
+            // return false for null users
+            if (!empty($parameters) && $parameters[0]->getName() === 'user') {
+                return false;
+            }
+        }
+
         array_unshift($arguments, $user);
 
         return call_user_func_array($callback, $arguments) === true;
     }
-
     /**
      * Call a policy method.
      *

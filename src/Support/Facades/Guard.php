@@ -3,7 +3,7 @@
 namespace Doppar\Authorizer\Support\Facades;
 
 /**
- * @method static \Doppar\Authorizer\Authorizer policy($class, $policy): void
+ * @method static \Doppar\Authorizer\Authorizer authorize($class, $authorizer): void
  * @method static \Doppar\Authorizer\Authorizer define($ability, callable $callback): void
  * @method static \Doppar\Authorizer\Authorizer allows($ability, ...$arguments): bool
  * @method static \Doppar\Authorizer\Authorizer denies($ability, ...$arguments): bool

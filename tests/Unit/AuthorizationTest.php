@@ -31,7 +31,7 @@ class AuthorizationTest extends TestCase
             public $id = 1;
         };
 
-        $this->authorizer->policy(get_class($model), get_class($policy));
+        $this->authorizer->authorize(get_class($model), get_class($policy));
         $this->assertSame([get_class($model) => get_class($policy)], $this->authorizer->policies());
     }
 
@@ -143,7 +143,7 @@ class AuthorizationTest extends TestCase
             public $id = 2;
         };
 
-        $this->authorizer->policy(get_class($model), get_class($policy));
+        $this->authorizer->authorize(get_class($model), get_class($policy));
 
         $this->authorizer->resolveUserUsing(fn() => $user);
         $this->assertTrue($this->authorizer->allows('update', $model));
@@ -185,7 +185,7 @@ class AuthorizationTest extends TestCase
     public function testClearMethod()
     {
         $this->authorizer->define('test', fn() => true);
-        $this->authorizer->policy('Model', 'Policy');
+        $this->authorizer->authorize('Model', 'Policy');
 
         $this->assertNotEmpty($this->authorizer->abilities());
         $this->assertNotEmpty($this->authorizer->policies());

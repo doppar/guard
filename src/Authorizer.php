@@ -45,15 +45,15 @@ class Authorizer
     protected $afterCallbacks = [];
 
     /**
-     * Register a policy for a given class.
+     * Register a authorizer for a given class.
      *
      * @param string $class
-     * @param string $policy
+     * @param string $authorizer
      * @return void
      */
-    public function policy($class, $policy): void
+    public function authorize($class, $authorizer): void
     {
-        $this->policies[$class] = $policy;
+        $this->policies[$class] = $authorizer;
     }
 
     /**
@@ -310,7 +310,17 @@ class Authorizer
         $model = $arguments[0];
         $policy = $this->getPolicyFor($model);
 
-        if ($policy && method_exists($policy, $ability)) {
+        if (!$policy) {
+            return false;
+        }
+
+        // If policy is a class name string, instantiate it
+        if (is_string($policy)) {
+            $policy = new $policy;
+        }
+
+        // Check if the ability exists on the policy
+        if (method_exists($policy, $ability)) {
             return $this->callPolicyMethod(
                 $policy,
                 $ability,
@@ -374,14 +384,27 @@ class Authorizer
      * @param mixed $class
      * @return mixed
      */
-    protected function getPolicyFor($class): mixed
+    protected function getPolicyFor($class): ?object
     {
         if (is_object($class)) {
             $class = get_class($class);
         }
 
+        if (!is_string($class)) {
+            return null;
+        }
+
+        // Check for exact match
         if (isset($this->policies[$class])) {
-            return new $this->policies[$class];
+            $policy = $this->policies[$class];
+            return is_string($policy) ? new $policy : $policy;
+        }
+
+        // Optional: Check for parent class policies
+        foreach ($this->policies as $policyClass => $policy) {
+            if (is_a($class, $policyClass, true)) {
+                return is_string($policy) ? new $policy : $policy;
+            }
         }
 
         return null;

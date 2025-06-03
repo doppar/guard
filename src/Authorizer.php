@@ -162,6 +162,7 @@ class Authorizer
     public function after(callable $callback): self
     {
         $this->afterCallbacks[] = $callback;
+
         return $this;
     }
 
@@ -196,8 +197,13 @@ class Authorizer
      * @param array $arguments
      * @return bool
      */
-    public function check($ability, array $arguments = []): bool
+    public function check($ability, array $arguments = [], array $visited = []): bool
     {
+        if (in_array($ability, $visited)) {
+            return false;
+        }
+        $visited[] = $ability;
+
         $user = $this->resolveUser();
 
         // Run global before callbacks
@@ -242,13 +248,21 @@ class Authorizer
             return $result;
         }
 
-        // Check if ability is a child in any hierarchy
-        foreach ($this->abilityHierarchies as $parentAbility => $childAbilities) {
-            if (in_array($ability, $childAbilities)) {
-                // If the parent ability is allowed, then the child is allowed
-                if ($this->check($parentAbility, $arguments)) {
+        // Check if ability is a parent in any hierarchy
+        if (isset($this->abilityHierarchies[$ability])) {
+            // If any child ability is allowed, the parent is allowed
+            foreach ($this->abilityHierarchies[$ability] as $childAbility) {
+                if ($this->check($childAbility, $arguments, $visited)) {
                     return true;
                 }
+            }
+        }
+
+        // Check parent abilities using getParents()
+        $parentAbilities = $this->getParents($ability);
+        foreach ($parentAbilities as $parentAbility) {
+            if ($this->check($parentAbility, $arguments, $visited)) {
+                return true;
             }
         }
 
@@ -272,6 +286,17 @@ class Authorizer
         return false;
     }
 
+    public function getParents($ability): array
+    {
+        $parents = [];
+        foreach ($this->abilityHierarchies as $parent => $children) {
+            if (in_array($ability, $children)) {
+                $parents[] = $parent;
+            }
+        }
+
+        return $parents;
+    }
     /**
      * Attempt authorization via policy methods.
      *
@@ -466,9 +491,27 @@ class Authorizer
      */
     public function hasAbility($ability): bool
     {
-        return isset($this->abilities[$ability]) ||
-            isset($this->temporaryAbilities[$ability]) ||
-            isset($this->abilityHierarchies[$ability]);
+        // Check direct abilities
+        if (
+            isset($this->abilities[$ability]) ||
+            isset($this->temporaryAbilities[$ability])
+        ) {
+            return true;
+        }
+
+        // Check if it's a parent in any hierarchy
+        if (isset($this->abilityHierarchies[$ability])) {
+            return true;
+        }
+
+        // Check if it's a child in any hierarchy
+        foreach ($this->abilityHierarchies as $children) {
+            if (in_array($ability, $children)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

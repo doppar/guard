@@ -1,5 +1,14 @@
 # Release Notes
 
+## v1.3.0 - 2026-03-08
+
+### What's Changed
+
+* rewrite doppar guard unit test for all possible test case: by [@techmahedy](https://github.com/techmahedy) in https://github.com/doppar/guard/pull/2
+* feat(guard): add ability aliases, wildcard abilities, and conditional abilities by [@techmahedy](https://github.com/techmahedy) in https://github.com/doppar/guard/pull/3
+
+**Full Changelog**: https://github.com/doppar/guard/compare/v1.2.0...v1.3.0
+
 ## v1.2.0 - 2025-11-23
 
 ### What's Changed

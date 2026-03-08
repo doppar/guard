@@ -14,7 +14,8 @@ namespace Doppar\Authorizer\Support\Facades;
  * @method static \Doppar\Authorizer\Authorizer after(callable $callback): self
  * @method static \Doppar\Authorizer\Authorizer inGroup($groupName, $ability): bool
  * @method static \Doppar\Authorizer\Authorizer getChildren($ability): array
- * @method static \Doppar\Authorizer\Authorizer check($ability, array $arguments = []): bool
+ * @method static \Doppar\Authorizer\Authorizer getParents($ability): array
+ * @method static \Doppar\Authorizer\Authorizer check($ability, array $arguments = [], array $visited = []): bool
  * @method static \Doppar\Authorizer\Authorizer resolveUserUsing(callable $userResolver): self
  * @method static \Doppar\Authorizer\Authorizer resolveUser(): mixed
  * @method static \Doppar\Authorizer\Authorizer policies(): array
@@ -24,6 +25,13 @@ namespace Doppar\Authorizer\Support\Facades;
  * @method static \Doppar\Authorizer\Authorizer all(array $abilities, array $arguments = []): bool
  * @method static \Doppar\Authorizer\Authorizer hasAbility($ability): bool
  * @method static \Doppar\Authorizer\Authorizer getAllAbilities(): array
+ * @method static \Doppar\Authorizer\Authorizer alias(string $alias, string $ability): self
+ * @method static \Doppar\Authorizer\Authorizer aliases(): array
+ * @method static \Doppar\Authorizer\Authorizer resolveAlias(string $ability): string
+ * @method static \Doppar\Authorizer\Authorizer wildcard(string $pattern, callable $callback): self
+ * @method static \Doppar\Authorizer\Authorizer matchWildcard(string $ability): ?string
+ * @method static \Doppar\Authorizer\Authorizer condition(string $ability, callable $condition): self
+ * @method static \Doppar\Authorizer\Authorizer conditions(): array
  * @see \Doppar\Authorizer\Authorizer
  */
 

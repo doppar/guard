@@ -1,5 +1,13 @@
 # Release Notes
 
+## v1.4.0 - 2026-03-10
+
+### What's Changed
+
+* Add Role Inference, Lazy Abilities, and Ability Voting to Guard by [@techmahedy](https://github.com/techmahedy) in https://github.com/doppar/guard/pull/4
+
+**Full Changelog**: https://github.com/doppar/guard/compare/v1.3.0...v1.4.0
+
 ## v1.3.0 - 2026-03-08
 
 ### What's Changed

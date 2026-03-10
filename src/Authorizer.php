@@ -5,78 +5,102 @@ namespace Doppar\Authorizer;
 class Authorizer
 {
     /**
-     * @var array The registered policies
+     * The registered policies
+     *
+     * @var array 
      */
     protected $policies = [];
 
     /**
-     * @var array The registered abilities (gates)
+     * The registered abilities
+     *
+     * @var array 
      */
     protected $abilities = [];
 
     /**
-     * @var callable The callback to resolve the current user
+     * The callback to resolve the current user
+     *
+     * @var callable
      */
     protected $userResolver;
 
     /**
-     * @var array Temporary abilities that expire after first check
+     * Temporary abilities that expire after first check
+     *
+     * @var array
      */
     protected $temporaryAbilities = [];
 
     /**
-     * @var array Ability hierarchies (parent -> child relationships)
+     * Ability hierarchies (parent -> child relationships)
+     *
+     * @var array
      */
     protected $abilityHierarchies = [];
 
     /**
-     * @var array Ability groups
+     * Ability groups
+     *
+     * @var array
      */
     protected $abilityGroups = [];
 
     /**
-     * @var array Global before callbacks
+     * Global before callbacks
+     *
+     * @var array
      */
     protected $beforeCallbacks = [];
 
     /**
-     * @var array Global after callbacks
+     * Global after callbacks
+     *
+     * @var array
      */
     protected $afterCallbacks = [];
 
     /**
-     * @var array Ability aliases
+     * Ability aliases
+     *
+     * @var array
      */
     protected $abilityAliases = [];
 
     /**
-     * @var array Conditional ability callbacks
+     * Conditional ability callbacks
+     *
+     * @var array
      */
     protected $conditionalAbilities = [];
 
     /**
-     * @var array Role abilities map
+     * Role abilities map
+     *
+     * @var array
      */
     protected $roleAbilities = [];
 
     /**
-     * @var string The user object property used to read the role value
+     * The user object property used to read the role value
+     *
+     * @var string
      */
     protected $roleProperty = 'role';
 
     /**
-     * @var array Lazy abilities
+     * Lazy abilities
+     *
+     * @var array
      */
     protected $lazyAbilities = [];
 
     /**
-     * @var array Voting abilities
+     * Voting abilities
+     *
+     * @var array
      */
     protected $votingAbilities = [];
-
-    // =========================================================================
-    // EXISTING API
-    // =========================================================================
 
     /**
      * Register a authorizer for a given class.

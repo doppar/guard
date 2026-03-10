@@ -55,6 +55,30 @@ class Authorizer
     protected $conditionalAbilities = [];
 
     /**
+     * @var array Role abilities map
+     */
+    protected $roleAbilities = [];
+
+    /**
+     * @var string The user object property used to read the role value
+     */
+    protected $roleProperty = 'role';
+
+    /**
+     * @var array Lazy abilities
+     */
+    protected $lazyAbilities = [];
+
+    /**
+     * @var array Voting abilities
+     */
+    protected $votingAbilities = [];
+
+    // =========================================================================
+    // EXISTING API
+    // =========================================================================
+
+    /**
      * Register a authorizer for a given class.
      *
      * @param string $class
@@ -349,7 +373,200 @@ class Authorizer
     }
 
     /**
-     * Enhanced check method with all features.
+     * Register a role-to-abilities map for automatic role inference.
+     *
+     * @param array $map
+     * @param string $property
+     * @return $this
+     */
+    public function roles(array $map, string $property = 'role'): self
+    {
+        foreach ($map as $role => $abilities) {
+            $this->roleAbilities[$role] = (array) $abilities;
+        }
+
+        $this->roleProperty = $property;
+
+        return $this;
+    }
+
+    /**
+     * Return the registered role-to-abilities map.
+     *
+     * @return array<string, array>
+     */
+    public function roleMap(): array
+    {
+        return $this->roleAbilities;
+    }
+
+    /**
+     * Return the user property name used for role resolution.
+     *
+     * @return string
+     */
+    public function roleProperty(): string
+    {
+        return $this->roleProperty;
+    }
+
+    /**
+     * Check whether the user's role grants the given ability.
+     *
+     * @param mixed $user
+     * @param string $ability
+     * @return bool
+     */
+    protected function checkViaRoles($user, string $ability): bool
+    {
+        if ($user === null) {
+            return false;
+        }
+
+        $property = $this->roleProperty;
+
+        if (!isset($user->$property)) {
+            return false;
+        }
+
+        $role = $user->$property;
+
+        if (!isset($this->roleAbilities[$role])) {
+            return false;
+        }
+
+        foreach ($this->roleAbilities[$role] as $pattern) {
+            if ($pattern === $ability) {
+                return true;
+            }
+
+            if (strpos($pattern, '*') !== false && $this->wildcardPatternMatches($pattern, $ability)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Register a lazy ability whose callback is deferred until the first check.
+     *
+     * @param string $ability
+     * @param callable $callback
+     * @return $this
+     */
+    public function lazy(string $ability, callable $callback): self
+    {
+        $this->lazyAbilities[$ability] = $callback;
+        return $this;
+    }
+
+    /**
+     * Return all registered lazy abilities (pending and not yet promoted).
+     *
+     * @return array<string, callable>
+     */
+    public function lazyAbilities(): array
+    {
+        return $this->lazyAbilities;
+    }
+
+    /**
+     * Promote a pending lazy ability into the standard abilities map.
+     *
+     * @param string $ability
+     * @return void
+     */
+    protected function promoteLazy(string $ability): void
+    {
+        if (isset($this->lazyAbilities[$ability])) {
+            $this->abilities[$ability] = $this->lazyAbilities[$ability];
+            unset($this->lazyAbilities[$ability]);
+        }
+    }
+
+    /**
+     * Register multiple voter callbacks for a single ability.
+     *
+     * Each voter receives ($user, ...$arguments) and returns:
+     *   true   — affirmative vote (GRANT)
+     *   false  — negative vote   (DENY)
+     *   null   — abstain         (ignored in tally)
+     *
+     * Strategies:
+     *   'majority'  (default) — more grants than denies required; ties deny
+     *   'unanimous'           — every non-abstaining voter must grant;
+     *                           a single false vote denies; all-abstain denies
+     *
+     * @param string $ability
+     * @param callable[] $voters
+     * @param string $strategy
+     * @return $this
+     *
+     * @throws \InvalidArgumentException for unknown strategies
+     */
+    public function vote(string $ability, array $voters, string $strategy = 'majority'): self
+    {
+        if (!in_array($strategy, ['majority', 'unanimous'], true)) {
+            throw new \InvalidArgumentException(
+                "Invalid voting strategy '{$strategy}'. Supported values: 'majority', 'unanimous'."
+            );
+        }
+
+        $this->votingAbilities[$ability] = [
+            'voters'   => $voters,
+            'strategy' => $strategy,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * Return all registered voting ability configurations.
+     *
+     * @return array<string, array{voters: callable[], strategy: string}>
+     */
+    public function votingAbilities(): array
+    {
+        return $this->votingAbilities;
+    }
+
+    /**
+     * Tally votes and return the final boolean result for the given ability.
+     *
+     * @param string $ability
+     * @param mixed  $user
+     * @param array  $arguments
+     * @return bool
+     */
+    protected function resolveVote(string $ability, $user, array $arguments): bool
+    {
+        $config   = $this->votingAbilities[$ability];
+        $strategy = $config['strategy'];
+        $grant    = 0;
+        $deny     = 0;
+
+        foreach ($config['voters'] as $voter) {
+            $result = call_user_func_array($voter, array_merge([$user], $arguments));
+
+            if ($result === true) {
+                $grant++;
+            } elseif ($result === false) {
+                $deny++;
+            }
+            // null === abstain, not counted
+        }
+
+        if ($strategy === 'unanimous') {
+            return $deny === 0 && $grant > 0;
+        }
+
+        // majority: more grants than denies; ties deny
+        return $grant > $deny;
+    }
+
+    /**
+     * Core authorization check.
      *
      * @param string $ability
      * @param array  $arguments
@@ -393,11 +610,26 @@ class Authorizer
             }
         }
 
+        // Promote lazy ability on first access
+        $this->promoteLazy($ability);
+
         // Temporary abilities
         if (isset($this->temporaryAbilities[$ability])) {
             $callback = $this->temporaryAbilities[$ability];
             unset($this->temporaryAbilities[$ability]);
             $result = $this->callAuthCallback($user, $callback, $arguments);
+
+            foreach ($this->afterCallbacks as $afterCallback) {
+                $afterArgs = array_merge([$user, $ability, $result], $arguments);
+                call_user_func_array($afterCallback, $afterArgs);
+            }
+
+            return $result;
+        }
+
+        // Voting abilities
+        if (isset($this->votingAbilities[$ability])) {
+            $result = $this->resolveVote($ability, $user, $arguments);
 
             foreach ($this->afterCallbacks as $afterCallback) {
                 $afterArgs = array_merge([$user, $ability, $result], $arguments);
@@ -423,6 +655,18 @@ class Authorizer
         $wildcardPattern = $this->matchWildcard($ability);
         if ($wildcardPattern !== null) {
             $result = $this->callAuthCallback($user, $this->abilities[$wildcardPattern], $arguments);
+
+            foreach ($this->afterCallbacks as $afterCallback) {
+                $afterArgs = array_merge([$user, $ability, $result], $arguments);
+                call_user_func_array($afterCallback, $afterArgs);
+            }
+
+            return $result;
+        }
+
+        //  Role inference
+        if ($this->checkViaRoles($user, $ability)) {
+            $result = true;
 
             foreach ($this->afterCallbacks as $afterCallback) {
                 $afterArgs = array_merge([$user, $ability, $result], $arguments);
@@ -468,6 +712,12 @@ class Authorizer
         return false;
     }
 
+    /**
+     * Get parent abilities for a given ability.
+     *
+     * @param string $ability
+     * @return array
+     */
     public function getParents($ability): array
     {
         $parents = [];
@@ -635,10 +885,13 @@ class Authorizer
      */
     public function clear(): self
     {
-        $this->policies              = [];
-        $this->abilities             = [];
-        $this->abilityAliases        = [];
-        $this->conditionalAbilities  = [];
+        $this->policies             = [];
+        $this->abilities            = [];
+        $this->abilityAliases       = [];
+        $this->conditionalAbilities = [];
+        $this->roleAbilities        = [];
+        $this->lazyAbilities        = [];
+        $this->votingAbilities      = [];
 
         return $this;
     }
@@ -691,6 +944,10 @@ class Authorizer
             return true;
         }
 
+        if (isset($this->lazyAbilities[$ability]) || isset($this->votingAbilities[$ability])) {
+            return true;
+        }
+
         if (isset($this->abilityHierarchies[$ability])) {
             return true;
         }
@@ -724,6 +981,8 @@ class Authorizer
         return array_unique(array_merge(
             array_keys($this->abilities),
             array_keys($this->temporaryAbilities),
+            array_keys($this->lazyAbilities),
+            array_keys($this->votingAbilities),
             array_keys($this->abilityHierarchies)
         ));
     }

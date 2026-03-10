@@ -32,6 +32,13 @@ namespace Doppar\Authorizer\Support\Facades;
  * @method static \Doppar\Authorizer\Authorizer matchWildcard(string $ability): ?string
  * @method static \Doppar\Authorizer\Authorizer condition(string $ability, callable $condition): self
  * @method static \Doppar\Authorizer\Authorizer conditions(): array
+ * @method static \Doppar\Authorizer\Authorizer roles(array $map, string $property = 'role'): self
+ * @method static \Doppar\Authorizer\Authorizer roleMap(): array
+ * @method static \Doppar\Authorizer\Authorizer roleProperty(): string
+ * @method static \Doppar\Authorizer\Authorizer lazy(string $ability, callable $callback): self
+ * @method static \Doppar\Authorizer\Authorizer lazyAbilities(): array
+ * @method static \Doppar\Authorizer\Authorizer vote(string $ability, array $voters, string $strategy = 'majority'): self
+ * @method static \Doppar\Authorizer\Authorizer votingAbilities(): array
  * @see \Doppar\Authorizer\Authorizer
  */
 

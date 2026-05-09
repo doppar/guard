@@ -1,5 +1,13 @@
 # Release Notes
 
+## v1.4.1 - 2026-05-09
+
+### What's Changed
+
+* Made GuardServiceProvider Ghostable by [@techmahedy](https://github.com/techmahedy) in https://github.com/doppar/guard/pull/5
+
+**Full Changelog**: https://github.com/doppar/guard/compare/v1.4.0...v1.4.1
+
 ## v1.4.0 - 2026-03-10
 
 ### What's Changed

@@ -1,5 +1,13 @@
 # Release Notes
 
+## v1.4.2 - 2026-05-13
+
+### What's Changed
+
+* removed branch alias from composer.json by [@techmahedy](https://github.com/techmahedy) in https://github.com/doppar/guard/pull/6
+
+**Full Changelog**: https://github.com/doppar/guard/compare/v1.4.1...v1.4.2
+
 ## v1.4.1 - 2026-05-09
 
 ### What's Changed

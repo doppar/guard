@@ -28,9 +28,6 @@
         }
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "1.x-dev"
-        },
         "doppar": {
             "providers": [
                 "Doppar\\Authorizer\\GuardServiceProvider"
@@ -41,5 +38,6 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "require": {}
+    "require": {},
+    "prefer-stable": true
 }

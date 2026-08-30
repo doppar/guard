@@ -15,7 +15,7 @@
     ],
     "require-dev": {
         "mockery/mockery": "^1.6",
-        "phpunit/phpunit": "^12.1.5"
+        "phpunit/phpunit": "^13.3"
     },
     "autoload": {
         "psr-4": {
@@ -30,7 +30,7 @@
     "extra": {
         "doppar": {
             "providers": [
-                "Doppar\\Authorizer\\GuardServiceProvider"
+                "Doppar\\Authorizer\\GuardLauncher"
             ]
         }
     },

@@ -13,9 +13,12 @@
             "email": "mahedy150101@gmail.com"
         }
     ],
+    "require": {
+        "php": "^8.5"
+    },
     "require-dev": {
         "mockery/mockery": "^1.6",
-        "phpunit/phpunit": "^12.1.5"
+        "phpunit/phpunit": "^13.3"
     },
     "autoload": {
         "psr-4": {
@@ -27,17 +30,9 @@
             "Doppar\\Authorizer\\Tests\\": "tests/"
         }
     },
-    "extra": {
-        "doppar": {
-            "providers": [
-                "Doppar\\Authorizer\\GuardServiceProvider"
-            ]
-        }
-    },
     "config": {
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "require": {},
     "prefer-stable": true
 }

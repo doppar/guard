@@ -2,11 +2,11 @@
 
 namespace Doppar\Authorizer;
 
-use Phaseolies\Providers\GhostableProvider;
-use Phaseolies\Providers\ServiceProvider;
+use Phaseolies\Launchers\GhostableLauncher;
+use Phaseolies\Launchers\ServiceLauncher;
 use Doppar\Authorizer\Authorizer;
 
-class GuardServiceProvider extends ServiceProvider implements GhostableProvider
+class GuardLauncher extends ServiceLauncher implements GhostableLauncher
 {
     /**
      * Register any application services.
@@ -25,7 +25,7 @@ class GuardServiceProvider extends ServiceProvider implements GhostableProvider
      *
      * @return void
      */
-    public function boot(): void
+    public function launch(): void
     {
         //
     }

@@ -1,0 +1,229 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to function is_callable\(\) with callable\(\)\: mixed will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Call to function is_string\(\) with object will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:abilities\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:all\(\) has parameter \$abilities with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:all\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:any\(\) has parameter \$abilities with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:any\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:authorizeViaPolicy\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:callAuthCallback\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:callPolicyMethod\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:check\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:check\(\) has parameter \$visited with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:getAllAbilities\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:getChildren\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:getParents\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:group\(\) has parameter \$abilities with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:inherit\(\) has parameter \$childAbilities with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:policies\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:resolveVote\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:roleMap\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Method Doppar\\Authorizer\\Authorizer\:\:roles\(\) has parameter \$map with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^PHPDoc tag @return with type mixed is not subtype of native type object\|null\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function call_user_func_array expects callable\(\)\: mixed, array\{mixed, string\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Parameter \#1 \$function of class ReflectionFunction constructor expects Closure\|string, callable\(\)\: mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Property Doppar\\Authorizer\\Authorizer\:\:\$abilities type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Property Doppar\\Authorizer\\Authorizer\:\:\$abilityAliases type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Property Doppar\\Authorizer\\Authorizer\:\:\$abilityGroups type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Property Doppar\\Authorizer\\Authorizer\:\:\$abilityHierarchies type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Property Doppar\\Authorizer\\Authorizer\:\:\$afterCallbacks type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Property Doppar\\Authorizer\\Authorizer\:\:\$beforeCallbacks type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Property Doppar\\Authorizer\\Authorizer\:\:\$conditionalAbilities type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Property Doppar\\Authorizer\\Authorizer\:\:\$lazyAbilities type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Property Doppar\\Authorizer\\Authorizer\:\:\$policies type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Property Doppar\\Authorizer\\Authorizer\:\:\$roleAbilities type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Property Doppar\\Authorizer\\Authorizer\:\:\$temporaryAbilities type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Property Doppar\\Authorizer\\Authorizer\:\:\$votingAbilities type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/Authorizer.php
+
+		-
+			message: '#^Call to an undefined method Phaseolies\\Auth\\ActorManager\|Phaseolies\\Auth\\Security\\Authenticate\:\:user\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/GuardLauncher.php

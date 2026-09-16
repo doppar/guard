@@ -13,17 +13,15 @@
 
 ## About Doppar Guard
 
-> **Note:** This repository contains the core code of the Doppar framework guard package. If you want to build an application using Doppar, visit the main [Doppar repository](https://github.com/doppar/doppar).
-
 Doppar Guard is a modern authorization package built to bring powerful, expressive, and fine-grained access control to your Doppar applications. Doppar Guard offers a lightweight yet robust solution for defining and checking user permissions with clarity and ease. Designed for flexibility, security, and developer happiness, Doppar Guard streamlines the process of implementing complex authorization logic, helping teams build secure applications faster—without sacrificing control or performance.
 
 ## Contributing
 
-Thank you for considering contributing to the Doppar framework! The contribution guide can be found in the [Doppar documentation](https://doppar.com/versions/3.x/contributions.html).
+Thank you for considering contributing to the Doppar framework! The contribution guide can be found in the [Doppar documentation](https://doppar.com/versions/4.x/contributions).
 
 ## Code of Conduct
 
-In order to ensure that the Doppar community is welcoming to all, please review and abide by the [Code of Conduct](https://doppar.com/versions/3.x/contributions.html#code-of-conduct).
+In order to ensure that the Doppar community is welcoming to all, please review and abide by the [Code of Conduct](https://doppar.com/versions/4.x/contributions#code-of-conduct).
 
 ## Security Vulnerabilities
 

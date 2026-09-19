@@ -1,5 +1,16 @@
 # Release Notes
 
+## 4.0.0 - 2026-09-16
+
+### What's Changed
+
+* ready for doppar 4.x by [@techmahedy](https://github.com/techmahedy) in https://github.com/doppar/guard/pull/7
+* tests.yml for php8.5 by [@techmahedy](https://github.com/techmahedy) in https://github.com/doppar/guard/pull/8
+* fix phpstan error by [@techmahedy](https://github.com/techmahedy) in https://github.com/doppar/guard/pull/9
+* readme.md updated for 4.x version: by [@techmahedy](https://github.com/techmahedy) in https://github.com/doppar/guard/pull/10
+
+**Full Changelog**: https://github.com/doppar/guard/compare/v1.4.2...4.0.0
+
 ## v1.4.2 - 2026-05-13
 
 ### What's Changed
